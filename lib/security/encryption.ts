@@ -4,7 +4,7 @@ const ALGORITHM = 'aes-256-gcm';
 const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || '';
 
 if (!ENCRYPTION_KEY || ENCRYPTION_KEY.length !== 32) {
-  console.warn('Warning: ENCRYPTION_KEY must be 32 characters long');
+  throw new Error('ENCRYPTION_KEY must be exactly 32 characters long');
 }
 
 /**

@@ -29,14 +29,14 @@ export async function GET(request: NextRequest) {
     // Get query parameters
     const searchParams = request.nextUrl.searchParams;
     const status = searchParams.get('status');
-    const limit = parseInt(searchParams.get('limit') || '50');
+    const limit = Math.min(parseInt(searchParams.get('limit') || '50'), 100);
 
     // Fetch conversations
     let query = db.query.conversations.findMany({
       where: (conversations, { eq, and }) => {
         const conditions = [eq(conversations.organizationId, orgId)];
         if (status) {
-          conditions.push(eq(conversations.status, status as any));
+          conditions.push(eq(conversations.status, status));
         }
         return and(...conditions);
       },
